@@ -1,42 +1,22 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <assert.h>
+#include <exception>
+#include <vector>
+#include <iostream>
+#include "gfx/window.hpp"
+#include "input/input.hpp"
 
 int main(void)
 {
-	GLFWwindow* window;
+	using namespace kdr;
 
-	if (!glewInit())
-		assert(false);
+	kdr::Window* window = new Window("KDR", 500, 500, true);
 
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-	
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
+	while (window->isRunning()) {
+		window->clear();
+		window->update();
 	}
 
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
 	return 0;
 }
