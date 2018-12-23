@@ -149,17 +149,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\gfx\shader.cpp" />
     <ClCompile Include="src\gfx\window.cpp" />
     <ClCompile Include="src\input\input.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\vec.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gfx\shader.hpp" />
     <ClInclude Include="src\gfx\window.hpp" />
     <ClInclude Include="src\input\input.hpp" />
     <ClInclude Include="src\math\mat4.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\vec.hpp" />
+    <ClInclude Include="src\util\utilfiles.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
