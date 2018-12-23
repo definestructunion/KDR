@@ -10,4 +10,4 @@
 *.sdf
 *.user
 .vs/
-builds/
+builds/*
