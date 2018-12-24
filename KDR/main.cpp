@@ -4,24 +4,16 @@
 #include <exception>
 #include <vector>
 #include <iostream>
-#include "gfx/window.hpp"
+#include "base/game.hpp"
 #include "input/input.hpp"
 #include "util/utilfiles.hpp"
 #include "gfx/shader.hpp"
+#include "TestGame.hpp"
+#include "gfx/renderers/renderer.hpp"
 
 int main(void)
 {
 	using namespace kdr;
-
-	kdr::Window* window = new Window("KDR", 500, 500, true);
-
-	Shader* shader = new Shader("res/shaders/basic.shader", true, "#shader", "vertex", "fragment");
-	Shader* shader2 = new Shader();
-
-	while (window->isRunning()) {
-		window->clear();
-		window->update();
-	}
-
-	return 0;
+	Game* game = new TestGame("KDR Engine", 500, 500, false);
+	return game->run();
 }

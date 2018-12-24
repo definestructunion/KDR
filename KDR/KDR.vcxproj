@@ -122,6 +122,11 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -139,6 +144,11 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -148,20 +158,44 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ext\freetype-gl\platform.c" />
+    <ClCompile Include="ext\freetype-gl\texture-atlas.c" />
+    <ClCompile Include="ext\freetype-gl\texture-font.c" />
+    <ClCompile Include="ext\freetype-gl\vector.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\base\game.cpp" />
+    <ClCompile Include="src\gfx\renderers\indexbuffer.cpp" />
+    <ClCompile Include="src\gfx\renderers\renderer.cpp" />
     <ClCompile Include="src\gfx\shader.cpp" />
+    <ClCompile Include="src\gfx\texture.cpp" />
     <ClCompile Include="src\gfx\window.cpp" />
     <ClCompile Include="src\input\input.cpp" />
     <ClCompile Include="src\math\mat4.cpp" />
     <ClCompile Include="src\math\vec.cpp" />
+    <ClCompile Include="src\TestGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ext\freetype-gl\freetype-gl.h" />
+    <ClInclude Include="ext\freetype-gl\opengl.h" />
+    <ClInclude Include="ext\freetype-gl\platform.h" />
+    <ClInclude Include="ext\freetype-gl\texture-atlas.h" />
+    <ClInclude Include="ext\freetype-gl\texture-font.h" />
+    <ClInclude Include="ext\freetype-gl\vec234.h" />
+    <ClInclude Include="ext\freetype-gl\vector.h" />
+    <ClInclude Include="ext\stb_image\stb_image.h" />
+    <ClInclude Include="src\base\game.hpp" />
+    <ClInclude Include="src\gfx\renderers\batchrenderer.hpp" />
+    <ClInclude Include="src\gfx\renderers\indexbuffer.hpp" />
+    <ClInclude Include="src\gfx\renderers\vertexdata.hpp" />
     <ClInclude Include="src\gfx\shader.hpp" />
+    <ClInclude Include="src\gfx\texture.hpp" />
     <ClInclude Include="src\gfx\window.hpp" />
     <ClInclude Include="src\input\input.hpp" />
     <ClInclude Include="src\math\mat4.hpp" />
     <ClInclude Include="src\math\math.hpp" />
     <ClInclude Include="src\math\vec.hpp" />
+    <ClInclude Include="src\gfx\renderers\renderer.hpp" />
+    <ClInclude Include="src\TestGame.hpp" />
     <ClInclude Include="src\util\utilfiles.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

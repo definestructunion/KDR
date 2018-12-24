@@ -1,8 +1,10 @@
 #include <GL/glew.h>
 #include "window.hpp"
+#include "../base/game.hpp"
 #include "input/input.hpp"
 #include <iostream>
 #include <vcruntime_exception.h>
+#include <functional>
 
 namespace kdr {
 	void errorCallback(int error, const char* description) {
@@ -17,6 +19,7 @@ namespace kdr {
 		Window* win = (Window*)glfwGetWindowUserPointer(window);
 		win->width = width;
 		win->height = height;
+		win->game.windowResize();
 		return;
 	}
 
@@ -42,8 +45,8 @@ namespace kdr {
 		return;
 	}
 
-	Window::Window(const char* title, unsigned short width, unsigned short height, bool limit_framerate)
-	: title(title), width(width), height(height), framerate_limited(limit_framerate) {
+	Window::Window(Game& game, const char* title, unsigned short width, unsigned short height, bool limit_framerate)
+	: game(game), title(title), width(width), height(height), framerate_limited(limit_framerate) {
 		// errorCallback is able to be called before glfwInit
 		// and glfwInit can fail, so if it does happen, it
 		// would be beneficial to see the error
@@ -111,6 +114,10 @@ namespace kdr {
 		if (errors != GL_NO_ERROR)
 			std::cout << "OpenGL error " << errors << std::endl;
 		glfwPollEvents();
+		return;
+	}
+
+	void Window::draw() {
 		glfwSwapBuffers(glfw_window);
 		return;
 	}
