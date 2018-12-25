@@ -79,6 +79,11 @@ namespace kdr {
 	}
 
 	void TestGame::windowResize() {
+		delete ortho;
+		ortho = new mat4(mat4::ortho(0, window->getWidth(), window->getHeight(), 0, -100, 100));
+		shader->bind();
+		shader->setUniformMat4("pr_matrix", *ortho);
+		shader->unbind();
 		std::cout << "Resized" << std::endl;
 		return;
 	}

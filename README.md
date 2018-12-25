@@ -7,7 +7,7 @@
 KDR is a simple roguelike rendering/input/audio framework.
 
 
-## Libraries Used
+## Externals Used
 
 
 Rendering:
@@ -30,6 +30,11 @@ Audio:
 
 * IrrKlang
 
+
+Gameplay:
+
+* FastNoise
+
 ---
 
 # Features So Far
@@ -39,15 +44,25 @@ Audio:
 
 * Input
 
+* Textures
+
 * Vertex and Fragment shaders
+
+* Tile Rendering/Batch Rendering
+
+* Rendering transformations
 
 
 # Features To Come
 
-* Batch Rendering
-
 * Layer Rendering
 
-* Tile Rendering
-
 * Text Rendering
+
+* Audio
+
+* Parents
+
+* Layered Noise
+
+* A* Pathfinding

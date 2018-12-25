@@ -63,6 +63,14 @@ namespace kdr {
 		 */
 		bool isRunning() const;
 
+		inline const int getWidth() const {
+			return width;
+		}
+
+		inline const int getHeight() const {
+			return height;
+		}
+
 		/*
 		 Callback function for glfw errors
 		 @param error: ID of the error
