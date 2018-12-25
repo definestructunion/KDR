@@ -1,8 +1,10 @@
 #ifndef _KDR_RENDERER_HPP
 #define _KDR_RENDERER_HPP
 
+//#include <GL/glew.h>
 #include "../../math/math.hpp"
 #include "../texture.hpp"
+#include "../font.hpp"
 #include <vector>
 
 namespace kdr {
@@ -40,6 +42,17 @@ namespace kdr {
 	class Renderer abstract {
 	protected:
 		/*
+		 The texture coordinates of the
+		 sprite
+		 */
+		vec2 uv[4] = {
+			vec2(0, 0),
+			vec2(0, 1),
+			vec2(1, 1),
+			vec2(1, 0)
+		};
+
+		/*
 		 The transforms of the Renderer
 		 */
 		std::vector<mat4> transforms;
@@ -53,7 +66,7 @@ namespace kdr {
 		 This renderer's information about tile
 		 drawing
 		 */
-		TileData tiles;
+		const TileData tiles;
 
 		/*
 		 Adds a matrix identity to the back of the transforms vector
@@ -119,20 +132,16 @@ namespace kdr {
 		 */
 		virtual void draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) = 0;
 
-		// TODO: Add Font
-
 		/*
 		 Draws a message to the screen according to the
 		 x and y values
 		 */
-		//virtual void drawString(const char* text, const Font& font, const int x, const int y) = 0;
-
-		// TODO: Add Font
+		virtual void drawString(const char* text, const Font& font, const int x, const int y) = 0;
 
 		/*
 		 Draws a message to the screen without tile restrictions
 		 */
-		//virtual void drawString(const char* text, const Font& font, const vec3& position) = 0;
+		virtual void drawString(const char* text, const Font& font, const vec3& position) = 0;
 	};
 }
 

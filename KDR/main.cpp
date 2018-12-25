@@ -10,10 +10,13 @@
 #include "gfx/shader.hpp"
 #include "TestGame.hpp"
 #include "gfx/renderers/renderer.hpp"
+#include "gfx/renderers/batchrenderer.hpp"
 
 int main(void)
 {
 	using namespace kdr;
 	Game* game = new TestGame("KDR Engine", 500, 500, false);
-	return game->run();
+	int result = game->run();
+	delete game;
+	return result;
 }

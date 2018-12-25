@@ -1,5 +1,4 @@
 #include "indexbuffer.hpp"
-#include <GL/glew.h>
 
 namespace kdr {
 	IndexBuffer::IndexBuffer(GLushort* data, GLsizei count)
@@ -7,9 +6,9 @@ namespace kdr {
 		// generates a buffer and we're going
 		// to retrieve the ID from the generation
 		// and give it to our IndexBuffer's ID
-		glGenBuffers(count, &buffer_id);
+		glGenBuffers(1, &buffer_id);
 		// bind the buf
-		glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 		// our buffer is an array buffer
 		// with size of the count (amount of elements)
 		// multiplied by the size of a unsigned short
@@ -19,11 +18,11 @@ namespace kdr {
 		// the ordering of how we're drawing rectangles never changes
 		// therefor, we should do GL_STATIC_DRAW as GL_DYNAMIC_DRAW
 		// expects data to be changed
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLushort), data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLushort), data, GL_STATIC_DRAW);
 		// unbind the index buffer from OpenGL
 		// once we are done setting the data
 		// for the buffer
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		return;
 	}
 
@@ -32,9 +31,9 @@ namespace kdr {
 		// generates a buffer and we're going
 		// to retrieve the ID from the generation
 		// and give it to our IndexBuffer's ID
-		glGenBuffers(count, &buffer_id);
+		glGenBuffers(1, &buffer_id);
 		// bind the buf
-		glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 		// our buffer is an array buffer
 		// with size of the count (amount of elements)
 		// multiplied by the size of a unsigned short
@@ -44,11 +43,11 @@ namespace kdr {
 		// the ordering of how we're drawing rectangles never changes
 		// therefor, we should do GL_STATIC_DRAW as GL_DYNAMIC_DRAW
 		// expects data to be changed
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
 		// unbind the index buffer from OpenGL
 		// once we are done setting the data
 		// for the buffer
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		return;
 	}
 
@@ -63,7 +62,7 @@ namespace kdr {
 	void IndexBuffer::bind() const {
 		// bind this buffer to OpenGL
 		// as an array buffer
-		glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_id);
 		return;
 	}
 
@@ -71,7 +70,7 @@ namespace kdr {
 		// unbind this buffer from OpenGL
 		// as an array buffer
 		// 0 is considered an invalid buffer ID
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		return;
 	}
 

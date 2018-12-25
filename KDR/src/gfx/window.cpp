@@ -1,4 +1,3 @@
-#include <GL/glew.h>
 #include "window.hpp"
 #include "../base/game.hpp"
 #include "input/input.hpp"
@@ -62,12 +61,15 @@ namespace kdr {
 		}
 
 		glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
-
 		// glfw is initialized now
 		// set callback functions that
 		// need to be after glfwInit
 		// some of these can be before glfwInit though
 		glfwMakeContextCurrent(glfw_window);
+		glfwHideWindow(glfw_window);
+		game.loadAssets();
+		glfwShowWindow(glfw_window);
+
 		glfwSetWindowUserPointer(glfw_window, this);
 		glfwSetFramebufferSizeCallback(glfw_window, windowResize);
 		glfwSetKeyCallback(glfw_window, keyCallback);

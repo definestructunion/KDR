@@ -1,9 +1,7 @@
 #ifndef _KDR_INDEXBUFFER_HPP
 #define _KDR_INDEXBUFFER_HPP
 
-typedef unsigned int   GLuint;
-typedef unsigned short GLushort;
-typedef int            GLsizei;
+#include <GL/glew.h>
 
 namespace kdr {
 	/*

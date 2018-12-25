@@ -1,7 +1,7 @@
+#include "../util/util.hpp"
 #include "texture.hpp"
 #define STB_IMAGE_IMPLEMENTATION
 #include "../../ext/stb_image/stb_image.h"
-#include <GL/glew.h>
 
 namespace kdr {
 	Texture::Texture(const char* file_path) {
@@ -39,9 +39,9 @@ namespace kdr {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 		// this texture uses RGBA8 with each channel having an unsigned byte
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, local_buffer); \
-			// unbind the texture now that we're done with it
-			glBindTexture(GL_TEXTURE_2D, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, local_buffer);
+		// unbind the texture now that we're done with it
+		glBindTexture(GL_TEXTURE_2D, NULL);
 
 		// if the local buffer isn't nullptr
 		if (local_buffer)

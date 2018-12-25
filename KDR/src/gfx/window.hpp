@@ -1,6 +1,7 @@
 #ifndef _KDR_WINDOW_HPP
 #define _KDR_WINDOW_HPP
 
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace kdr {

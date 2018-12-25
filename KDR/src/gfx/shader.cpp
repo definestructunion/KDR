@@ -1,7 +1,7 @@
 #include "shader.hpp"
+#include <GL/glew.h>
 #include "../util/utilfiles.hpp"
 
-#include <GL/glew.h>
 #include <iostream>
 #include <string>
 

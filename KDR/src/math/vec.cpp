@@ -239,10 +239,6 @@ namespace kdr {
 	}
 
 	unsigned int vec4::toColor1() {
-		int r = x * 255;
-		int g = y * 255;
-		int b = z * 255;
-		int a = w * 255;
 		return (int)(w * 255) << 0x0018 | (int)(z * 255) << 0x0010 | (int)(y * 255) << 0x0008 | (int)(x * 255);
 	}
 

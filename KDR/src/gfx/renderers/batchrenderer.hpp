@@ -6,6 +6,11 @@
 #include "vertexdata.hpp"
 
 /*
+The amount of indices in a sprite
+*/
+#define RENDERER_INDEX_COUNT  (6)
+
+/*
  The maximum amount of sprites
  allowed to be submitted before
  being forced to flush
@@ -30,7 +35,7 @@
  4 indices per sprite, there's still 6 indices in a square
  since it's drawn as 2 triangles
  */
-#define RENDERER_INDICES_SIZE (RENDERER_MAX_SPRITES * 6)
+#define RENDERER_INDICES_SIZE (RENDERER_MAX_SPRITES * RENDERER_INDEX_COUNT)
 
  /*
   The max amount of textures a BatchRenderer
@@ -60,17 +65,6 @@
 namespace kdr {
 	class BatchRenderer : public Renderer {
 	private:
-		/*
-		 The texture coordinates of the
-		 sprite
-		 */
-		vec2 uv[4] = {
-			vec2(0, 0),
-			vec2(0, 1),
-			vec2(1, 1),
-			vec2(1, 0)
-		};
-
 		/*
 		 Vertex array object
 		 Stores memory about our
@@ -122,25 +116,28 @@ namespace kdr {
 		 information and then increments the pointer
 		 to be filled again if needed
 		 */
-		void fillBuffer(const vec3& vertex, const vec2& uv, const float& tid, const unsigned int color);
+		void fillBuffer(const vec3& vertex, const vec2& uv, const float tid, const unsigned int color);
 
 		/*
 		 If the BatchRenderer needs to be flushed, it
 		 flushes all the data stored so far
+		 @param expected_indices_count: the amount of
+		 indices the submitted data will yield
+		 Text will be 6 indices per glyph
 		 */
-		void flushIfNeeded();
+		void flushIfNeeded(const int expected_indices_count);
 
 		/*
 		 Returns the texture slot index in our shader_tex_ids
 		 */
-		float getSlot(float texture_id);
+		float getSlot(const float texture_id);
 
 		/*
 		 Returns the texture slot index in our shader_tex_ids
 		 If you call getSlot when drawing a string, it will flicker
 		 every glyph as a box because the texture_id is 0 by default
 		 */
-		float getSlotString(float texture_id);
+		float getSlotString(const float texture_id);
 
 		/*
 		 Returns true if the texture_id is present in
@@ -148,7 +145,7 @@ namespace kdr {
 		 If false, pushes back the texture_id and changes
 		 slot to the end of the vector size
 		 */
-		bool getFound(float texture_id, float& slot);
+		bool getFound(const float texture_id, float& slot);
 
 	public:
 		/*
@@ -169,43 +166,40 @@ namespace kdr {
 		void begin() override;
 
 		/*
-		Ends the BatchRenderer
-		allowing it to draw all
-		the submitted data
-		*/
+		 Ends the BatchRenderer
+		 allowing it to draw all
+		 the submitted data
+		 */
 		void end() override;
 
 		/*
-		Draws a textured square to a tile according to the
-		x and y values
-		*/
-		virtual void draw(const Texture* texture, const int x, const int y, const unsigned int color) override;
+		 Draws a textured square to a tile according to the
+		 x and y values
+		 */
+		void draw(const Texture* texture, const int x, const int y, const unsigned int color) override;
 
 		/*
-		Draws a colored square to a tile according to the
-		x and y values
-		*/
-		virtual void draw(const unsigned int color, const int x, const int y) override;
+		 Draws a colored square to a tile according to the
+		 x and y values
+		 */
+		void draw(const unsigned int color, const int x, const int y) override;
 
 		/*
-		Draws a texture to the screen without tiled restrictions
-		*/
-		virtual void draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) override;
-
-		// TODO: Add Font
+		 Draws a texture to the screen without tiled restrictions
+		 */
+		void draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) override;
+		
+		/*
+		 Draws a message to the screen according to the
+		 x and y values
+		 */
+		void drawString(const char* text, const Font& font, const int x, const int y) override;
+		
 
 		/*
-		Draws a message to the screen according to the
-		x and y values
-		*/
-		//virtual void drawString(const char* text, const Font& font, const int x, const int y) override;
-
-		// TODO: Add Font
-
-		/*
-		Draws a message to the screen without tile restrictions
-		*/
-		//virtual void drawString(const char* text, const Font& font, const vec3& position) override;
+		 Draws a message to the screen without tile restrictions
+		 */
+		void drawString(const char* text, const Font& font, const vec3& position) override;
 
 		/*
 		 Sends all the data to OpenGL

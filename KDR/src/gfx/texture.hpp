@@ -1,7 +1,7 @@
 #ifndef _KDR_TEXTURE_HPP
 #define _KDR_TEXTURE_HPP
 
-typedef unsigned int GLuint;
+#include <GL/glew.h>
 
 namespace kdr {
 	/*
