@@ -59,7 +59,7 @@ namespace kdr {
 		/*
 		 Returns the ftgl font that this font is using
 		 */
-		inline const ftgl::texture_font_t* getFTFont() const {
+		inline ftgl::texture_font_t* getFTFont() const {
 			return ftFont;
 		}
 

@@ -3,12 +3,14 @@
 namespace kdr {
 	mat4::mat4() {
 		memset(elements, 0.0f, 16);
+		return;
 	}
 
 	mat4::mat4(float diagonal) {
 		for (unsigned int y = 0; y < 4; ++y)
 			for (unsigned int x = 0; x < 4; ++x)
 				(x != y) ? elements[x + y * 4] = 0 : elements[x + y * 4] = diagonal;
+		return;
 	}
 
 	mat4 mat4::identity() {
@@ -306,7 +308,6 @@ namespace kdr {
 		// elements are of type floats, meaning they are POD
 		// so memset works fine and faster than a for loop
 		memset(result.elements, *other.elements, 16);
-
 		return *this;
 	}
 

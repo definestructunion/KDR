@@ -54,7 +54,7 @@ namespace kdr {
 	"void main() {\n"
 	"	vec4 texColor = fs_in.color;\n"
 	"	if (fs_in.tid > 0.0) {\n"
-	"		int tid = int(fs_in.tid - 0.5);\n"
+	"		int tid = int(fs_in.tid - 0.1);\n"
 	"		texColor = fs_in.color * texture(textures[tid], fs_in.uv);\n"
 	"	}\n"
 	"	color = texColor;\n"

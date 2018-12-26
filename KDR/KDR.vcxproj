@@ -165,6 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\base\game.cpp" />
     <ClCompile Include="src\gfx\font.cpp" />
+    <ClCompile Include="src\gfx\rectangle.cpp" />
     <ClCompile Include="src\gfx\renderers\batchrenderer.cpp" />
     <ClCompile Include="src\gfx\renderers\indexbuffer.cpp" />
     <ClCompile Include="src\gfx\renderers\renderer.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="ext\stb_image\stb_image.h" />
     <ClInclude Include="src\base\game.hpp" />
     <ClInclude Include="src\gfx\font.hpp" />
+    <ClInclude Include="src\gfx\rectangle.hpp" />
     <ClInclude Include="src\gfx\renderers\batchrenderer.hpp" />
     <ClInclude Include="src\gfx\renderers\indexbuffer.hpp" />
     <ClInclude Include="src\gfx\renderers\vertexdata.hpp" />

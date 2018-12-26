@@ -1,7 +1,9 @@
 #include "batchrenderer.hpp"
-#include <string.h>
+#include <cstddef>
+#include <assert.h>
 
 namespace kdr {
+
 	BatchRenderer::BatchRenderer(TileData tile_info)
 	: Renderer(tile_info) {
 		// reserve this vector by how many slots are allowed to be bound to OpenGL
@@ -80,7 +82,7 @@ namespace kdr {
 		// squares in our BatchRenderer, two triangles have 2
 		// redundant vertices, so we're setting our IBO
 		// to have 4 vertices per Square rather than 6
-		
+
 		GLushort indices[RENDERER_INDICES_SIZE];
 
 		// offset starts at 0 and is incremented by 4 for each
@@ -93,25 +95,23 @@ namespace kdr {
 		// have 4 indices per square (2 triangles)
 		for (int i = 0; i < RENDERER_INDICES_SIZE; i += RENDERER_INDEX_COUNT) {
 
-			//  0
 			//   0   1   2
 			//   | \     |
 			//   |   \   |
 			//   |     \ |
 			//   2   3   0
-			//            0
 			//   
 			//   2 redundant vertices
 			//   see from this nice graph
 			//   I made? :)
 
-			indices[  i  ] = offset;
+			indices[  i  ] = offset + 0;
 			indices[i + 1] = offset + 1;
 			indices[i + 2] = offset + 2;
 
 			indices[i + 3] = offset + 2;
 			indices[i + 4] = offset + 3;
-			indices[i + 5] = offset;
+			indices[i + 5] = offset + 0;
 
 			offset += 4;
 		}
@@ -134,7 +134,6 @@ namespace kdr {
 		// unbind our VBO from OpenGL
 		glDeleteBuffers(1, &vbo);
 		glDeleteVertexArrays(1, &vao);
-		delete[] buffer;
 		return;
 	}
 
@@ -151,16 +150,6 @@ namespace kdr {
 		return;
 	}
 
-	void BatchRenderer::end() {
-		// unmap the buffer from OpenGL
-		// to allow drawing
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-		// unbind the buffer we bound
-		// when beginning the mapping
-		glBindBuffer(GL_ARRAY_BUFFER, NULL);
-		return;
-	}
-
 	void BatchRenderer::draw(const Texture* texture, const int x, const int y, const unsigned int color) {
 		// we are submitting 6 vertices (4 being renderered)
 		// so we put in RENDERER_INDEX_COUNT (6)
@@ -169,6 +158,7 @@ namespace kdr {
 		const int pos_y = (y * tiles.tile_size) + (tiles.offset_y * tiles.tile_size);
 		const unsigned int& slot = getSlot(texture->getID());
 
+		// fill the buffers with the appropriate positions, texture slots, and colors
 		fillBuffer(*transforms_back * vec3(pos_x, pos_y, 0), uv[0], slot, color);
 		fillBuffer(*transforms_back * vec3(pos_x, pos_y + tiles.tile_size, 0), uv[1], slot, color);
 		fillBuffer(*transforms_back * vec3(pos_x + tiles.tile_size, pos_y + tiles.tile_size, 0), uv[2], slot, color);
@@ -179,42 +169,183 @@ namespace kdr {
 	}
 
 	void BatchRenderer::draw(const unsigned int color, const int x, const int y) {
+		// we are submitting 6 vertices (4 being renderered)
+		// so we put in RENDERER_INDEX_COUNT (6)
 		flushIfNeeded(RENDERER_INDEX_COUNT);
 		const int pos_x = (x * tiles.tile_size) + (tiles.offset_x * tiles.tile_size);
 		const int pos_y = (y * tiles.tile_size) + (tiles.offset_y * tiles.tile_size);
 		const unsigned int& slot = getSlot(0.0f);
 
+		// fill the buffers with the appropriate positions, texture slots, and colors
 		fillBuffer(*transforms_back * vec3(pos_x, pos_y, 0), uv[0], slot, color);
 		fillBuffer(*transforms_back * vec3(pos_x, pos_y + tiles.tile_size, 0), uv[1], slot, color);
 		fillBuffer(*transforms_back * vec3(pos_x + tiles.tile_size, pos_y + tiles.tile_size, 0), uv[2], slot, color);
 		fillBuffer(*transforms_back * vec3(pos_x + tiles.tile_size, pos_y, 0), uv[3], slot, color);
+		// push our index_count by the technically correct
+		// amount of vertices our squares take up (6)
 		index_count += RENDERER_INDEX_COUNT;
-
 		return;
 	}
 
 	void BatchRenderer::draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) {
+		// we are submitting 6 vertices (4 being renderered)
+		// so we put in RENDERER_INDEX_COUNT (6)
+		flushIfNeeded(RENDERER_INDEX_COUNT);
+
+		const float size_x = texture->getWidth() * scale.x;
+		const float size_y = texture->getHeight() * scale.y;
+
+		// get the slot of the texture's ID
+		float slot = getSlot(texture->getID());
+		// fill the buffers with the appropriate positions, texture slots, and colors
+		fillBuffer(*transforms_back * position, uv[0], slot, color);
+		fillBuffer(*transforms_back * vec3(position.x, position.y + size_y, position.z), uv[1], slot, color);
+		fillBuffer(*transforms_back * vec3(position.x + size_x, position.y + size_y, position.z), uv[2], slot, color);
+		fillBuffer(*transforms_back * vec3(position.x + size_x, position.y, position.z), uv[3], slot, color);
+		// push our index_count by the technically correct
+		// amount of vertices our squares take up (6)
+		index_count += RENDERER_INDEX_COUNT;
+		return;
+	}
+
+	void BatchRenderer::draw(const Texture* texture, const Rectangle& rect, const unsigned int color) {
+		flushIfNeeded(RENDERER_INDEX_COUNT);
+
+		// get the slot of the texture's ID
+		float slot = getSlot(texture->getID());
+
+		// fill the buffers with the appropriate positions, texture slots, and colors
+		fillBuffer(*transforms_back * vec3(rect.x, rect.y, 0), uv[0], slot, color);
+		fillBuffer(*transforms_back * vec3(rect.x, rect.y + rect.height, 0), uv[1], slot, color);
+		fillBuffer(*transforms_back * vec3(rect.x + rect.width, rect.y + rect.height, 0), uv[2], slot, color);
+		fillBuffer(*transforms_back * vec3(rect.x + rect.width, rect.y, 0), uv[3], slot, color);
+		// push our index_count by the technically correct
+		// amount of vertices our squares take up (6)
+		index_count += RENDERER_INDEX_COUNT;
+		return;
+	}
+
+	void BatchRenderer::drawString(const char* text, const Font& font, const int x, const int y, const unsigned int color) {
+		using namespace ftgl;
+		int text_len = strlen(text);
+		int pos_x = (x * tiles.tile_size) + (tiles.offset_x * tiles.tile_size);
+		const int pos_y = (y * tiles.tile_size) + (tiles.offset_y * tiles.tile_size);
+
+		flushIfNeeded(RENDERER_INDEX_COUNT * text_len);
+
+		// get the texture slot of the font
+		// as text is technically an atlas
+		// which is a texture
+		float slot = getSlot(font.getID());
+		texture_font_t* ftFont = font.getFTFont();
+		for (int i = 0; i < text_len; i++) {
+			char c = text[i];
+			texture_glyph_t* glyph = texture_font_get_glyph(ftFont, c);
+			// if the glyph is a valid glyph
+			if (glyph) {
+				// we don't want to offset the first character
+				// as that would mess up the positioning of the text
+				if (i > 0) {
+					// offset the x position by the kerning of the glyph
+					float kerning = texture_glyph_get_kerning(glyph, text[i - 1]);
+					pos_x += kerning;
+				}
+
+				float x0 = pos_x + glyph->offset_x;
+				float y0 = pos_y + glyph->offset_y;
+				float x1 = x0 + glyph->width;
+				float y1 = y0 - glyph->height;
+				// NOTE:
+				// u0/1 = s0/1
+				// v0/1 = t0/1
+
+				// fill the buffer with the appropriate positions, texture slots, and colors
+				fillBuffer(*transforms_back * vec3(x0, y0, 0), vec2(glyph->s0, glyph->t0), slot, color);
+				fillBuffer(*transforms_back * vec3(x0, y1, 0), vec2(glyph->s0, glyph->t1), slot, color);
+				fillBuffer(*transforms_back * vec3(x1, y1, 0), vec2(glyph->s1, glyph->t1), slot, color);
+				fillBuffer(*transforms_back * vec3(x1, y0, 0), vec2(glyph->s1, glyph->t0), slot, color);
+
+				// push our index_count by the technically correct
+				// amount of vertices our squares take up (6)
+				index_count += RENDERER_INDEX_COUNT;
+				// add to the offset of the text
+				pos_x += glyph->advance_x;
+			}
+		}
 
 		return;
 	}
 
-	void BatchRenderer::drawString(const char* text, const Font& font, const int x, const int y) {
+	void BatchRenderer::drawString(const char* text, const Font& font, const vec3& position, const unsigned int color) {
+		using namespace ftgl;
+		int text_len = strlen(text);
+
+		flushIfNeeded(RENDERER_INDEX_COUNT * text_len);
+		// get the texture slot of the font
+		// as text is technically an atlas
+		// which is a texture
+		float ts = getSlot(font.getID());
+		float x = position.x;
+
+		texture_font_t* ftFont = font.getFTFont();
+
+		for (int i = 0; i < text_len; i++) {
+			char c = text[i];
+			texture_glyph_t* glyph = texture_font_get_glyph(ftFont, c);
+			// if the glyph is a valid glyph
+			if (glyph != NULL) {
+				// we don't want to offset the first character
+				// as that would mess up the positioning of the text
+				if (i > 0) {
+					// offset the x position by the kerning of the glyph
+					float kerning = texture_glyph_get_kerning(glyph, text[i - 1]);
+					x += kerning;
+				}
+
+				float x0 = x + glyph->offset_x;
+				float y0 = position.y + glyph->offset_y;
+				float x1 = x0 + glyph->width;
+				float y1 = y0 - glyph->height;
+				// NOTE:
+				// u0/1 = s0/1
+				// v0/1 = t0/1
+
+				// fill the buffer with the appropriate positions, texture slots, and colors
+				fillBuffer(*transforms_back * vec3(x0, y0, 0), vec2(glyph->s0, glyph->t0), ts, color);
+				fillBuffer(*transforms_back * vec3(x0, y1, 0), vec2(glyph->s0, glyph->t1), ts, color);
+				fillBuffer(*transforms_back * vec3(x1, y1, 0), vec2(glyph->s1, glyph->t1), ts, color);
+				fillBuffer(*transforms_back * vec3(x1, y0, 0), vec2(glyph->s1, glyph->t0), ts, color);
+				// push our index_count by the technically correct
+				// amount of vertices our squares take up (6)
+				index_count += 6;
+				// add to the offset of the text
+				x += glyph->advance_x;
+			}
+		}
 
 		return;
 	}
 
-	void BatchRenderer::drawString(const char* text, const Font& font, const vec3& position) {
-
+	void BatchRenderer::end() {
+		// unmap the buffer from OpenGL
+		// to allow drawing
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+		// unbind the buffer we bound
+		// when beginning the mapping
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		return;
 	}
 
 	void BatchRenderer::flush() {
+		// bind every currently submitted texture
 		for (int i = 0; i < shader_tex_ids.size(); ++i) {
-			// bind the texture to OpenGL
-			// then set the active texture to the bound texture
-			// GL_TEXTURE0 - GL_TEXTURE31 are sequencial
-			glBindTexture(GL_TEXTURE_2D, shader_tex_ids[i]);
+			// since GL_TEXTURE<number> is sequencial
+			// we can add i to the texture slots to properly bind them
+
+			// first activate the texture
 			glActiveTexture(GL_TEXTURE0 + i);
+			// then set the texture equal to the texture ID
+			glBindTexture(GL_TEXTURE_2D, shader_tex_ids[i]);
 		}
 
 		// bind our vertex array and IBO
@@ -243,23 +374,18 @@ namespace kdr {
 		buffer->uv = uv;
 		buffer->tid = tid;
 		buffer->color = color;
+		// push the buffer pointer so when
+		// this is called again
+		// we're not writing into the same
+		// memory
 		++buffer;
 		return;
 	}
 
-	void BatchRenderer::flushIfNeeded(int expected_indices_count) {
-		if (index_count + expected_indices_count >= RENDERER_INDICES_SIZE) {
-			// unmap the buffer, flush the submitted data
-			// then begin again
-			end();
-			flush();
-			begin();
-			// we don't want to reset the texture
-			// slots because they aren't the reason
-			// we're flushing
-		}
-
-		else if (shader_tex_ids.size() >= RENDERER_MAX_TEXTURES) {
+	void BatchRenderer::flushIfNeeded(const int expected_indices_count) {
+		// if the size of the vector is equal to or greater than
+		// our max sprite count, then we need to flush
+		if (shader_tex_ids.size() >= RENDERER_MAX_SPRITES) {
 			end();
 			flush();
 			begin();
@@ -270,13 +396,21 @@ namespace kdr {
 			// to push_back
 			shader_tex_ids.reserve(RENDERER_MAX_TEXTURES);
 		}
+
+		// or if our index_count is too high, we also will need to flush
+		else if (index_count + expected_indices_count >= RENDERER_MAX_SPRITES) {
+			end();
+			flush();
+			begin();
+			// we don't need to reserve or clear our vector
+			// since it wasn't the slots that forced a flush
+		}
 		return;
 	}
 
-	float BatchRenderer::getSlot(const float texture_id) {
-		// if the texture ID is 0
-		// then it's considered a non
-		// textured draw, therefor return 0
+	float BatchRenderer::getSlot(float texture_id) {
+		// if the texture ID is 0, then it's textureless
+		// so we can just end it here
 		if (texture_id == 0.0f)
 			return 0.0f;
 
@@ -294,7 +428,7 @@ namespace kdr {
 		return slot;
 	}
 
-	float BatchRenderer::getSlotString(const float texture_id) {
+	float BatchRenderer::getSlotString(float texture_id) {
 		// for text, we don't want to return if the texture_id
 		// equals 0 or else the text glyphs will show as a box
 		// for 1 frame at the start
@@ -312,7 +446,7 @@ namespace kdr {
 		return slot;
 	}
 
-	bool BatchRenderer::getFound(const float texture_id, float& slot) {
+	bool BatchRenderer::getFound(float texture_id, float& slot) {
 		for (unsigned int i = 0; i < shader_tex_ids.size(); ++i)
 			// if the texture_ids are equal to eachother
 			if (shader_tex_ids[i] == texture_id) {

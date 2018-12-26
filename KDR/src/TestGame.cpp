@@ -9,15 +9,17 @@ namespace kdr {
 		loadAssets();
 		window = new Window(*this, window_title, width, height, limit_framerate);
 		ortho = new mat4(mat4::ortho(0, width, height, 0, -100, 100));
-		renderer = new BatchRenderer(TileData(32, 5, 1));
+		renderer = new BatchRenderer(TileData(16, 5, 1));
 		return;
 	}
 
 	Texture* texture;
+	Texture* texture2;
 	Shader* shader;
 
 	void TestGame::loadAssets() {
 		texture = new Texture("res/textures/tb.png");
+		texture2 = new Texture("res/textures/tc.png");
 		std::cout << "Loaded Assets" << std::endl;
 	}
 
@@ -41,6 +43,8 @@ namespace kdr {
 		shader->setUniformMat4("pr_matrix", *ortho);
 		shader->unbind();
 
+		KDR_AddFont(new Font("SourceSansPro", "res/fonts/SourceSansPro-Light.TTF", 12));
+
 		return;
 	}
 
@@ -52,22 +56,34 @@ namespace kdr {
 	}
 
 	void TestGame::draw() {
+		Font* font = KDR_GetFont("SourceSansPro");
+		srand(NULL);
 		shader->bind();
 		renderer->begin();
-		srand(NULL);
+		
 		//renderer->draw(texture, 1, 1, vec4(1, 1, 1, 1).toColor1());
-		for (int y = 0; y < 5; ++y) {
-			for (int x = 0; x < 5; ++x) {
+		for (int y = 0; y < 50; ++y) {
+			for (int x = 0; x < 50; ++x) {
 				unsigned int col = 0x0;
-				if ((x + y) % 2 == 0)
+				Texture* tex = nullptr;
+				if ((x + y) % 2 == 1)
 					col = vec4(1, 1, 1, 1).toColor1();
 				else
 					col = vec4(0.5f, 0.5f, 1, 1).toColor1();
-				//unsigned int col = vec4(x / 5, y / 5, 1, 1).toColor1();
-				//unsigned int col = vec4(x / 5, y / 5, (x * y) / 25, 1).toColor1();
-				renderer->draw(texture, x, y, col);
+
+				if (rand() % 2 == 1)
+					tex = texture;
+				else
+					tex = texture2;
+
+				renderer->draw(tex, x, y, col);
 			}
 		}
+
+		
+		renderer->drawString("Hello", *font, 0, 0, vec4(1, 1, 1, 1).toColor1());
+		renderer->drawString("Test", *font, vec3(500, 500, 0), vec4(1, 1, 1, 1).toColor1());
+		renderer->draw(texture, Rectangle(600, 600, 200, 200), vec4(1, 1, 1, 1).toColor1());
 
 		renderer->end();
 		renderer->flush();

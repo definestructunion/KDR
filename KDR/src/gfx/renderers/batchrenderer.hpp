@@ -188,18 +188,23 @@ namespace kdr {
 		 Draws a texture to the screen without tiled restrictions
 		 */
 		void draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) override;
+
+		/*
+		 Draws a texture to the screen without tiled restrictions
+		 */
+		 void draw(const Texture* texture, const Rectangle& rect, const unsigned int color) override;
 		
 		/*
 		 Draws a message to the screen according to the
 		 x and y values
 		 */
-		void drawString(const char* text, const Font& font, const int x, const int y) override;
+		void drawString(const char* text, const Font& font, const int x, const int y, const unsigned int color) override;
 		
 
 		/*
 		 Draws a message to the screen without tile restrictions
 		 */
-		void drawString(const char* text, const Font& font, const vec3& position) override;
+		void drawString(const char* text, const Font& font, const vec3& position, const unsigned int color) override;
 
 		/*
 		 Sends all the data to OpenGL

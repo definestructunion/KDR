@@ -1,7 +1,7 @@
 #ifndef _KDR_RENDERER_HPP
 #define _KDR_RENDERER_HPP
 
-//#include <GL/glew.h>
+#include "../rectangle.hpp"
 #include "../../math/math.hpp"
 #include "../texture.hpp"
 #include "../font.hpp"
@@ -133,15 +133,20 @@ namespace kdr {
 		virtual void draw(const Texture* texture, const vec3& position, const vec2& scale, const unsigned int color) = 0;
 
 		/*
+		 Draws a texture to the screen without tiled restrictions
+		 */
+		virtual void draw(const Texture* texture, const Rectangle& rect, const unsigned int color) = 0;
+
+		/*
 		 Draws a message to the screen according to the
 		 x and y values
 		 */
-		virtual void drawString(const char* text, const Font& font, const int x, const int y) = 0;
+		virtual void drawString(const char* text, const Font& font, const int x, const int y, const unsigned int color) = 0;
 
 		/*
 		 Draws a message to the screen without tile restrictions
 		 */
-		virtual void drawString(const char* text, const Font& font, const vec3& position) = 0;
+		virtual void drawString(const char* text, const Font& font, const vec3& position, const unsigned int color) = 0;
 	};
 }
 

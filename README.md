@@ -48,16 +48,17 @@ Gameplay:
 
 * Vertex and Fragment shaders
 
-* Tile Rendering/Batch Rendering
+* Tile Rendering
+
+* Batch Rendering
+
+* Text Rendering
 
 * Rendering transformations
-
 
 # Features To Come
 
 * Layer Rendering
-
-* Text Rendering
 
 * Audio
 

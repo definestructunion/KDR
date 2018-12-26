@@ -8,6 +8,8 @@ namespace kdr {
 	: ref_name(ref_name), size(size) {
 		atlas  = ftgl::texture_atlas_new(ATLAS_WIDTH, ATLAS_HEIGHT, ATLAS_CHANNELS);
 		ftFont = ftgl::texture_font_new_from_file(atlas, size, file_path);
+		texture_atlas_upload(atlas);
+		//texture_atlas_upload(atlas);
 		return;
 	}
 
