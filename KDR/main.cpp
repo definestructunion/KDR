@@ -11,11 +11,12 @@
 #include "TestGame.hpp"
 #include "gfx/renderers/renderer.hpp"
 #include "gfx/renderers/batchrenderer.hpp"
+#include <nlohmann/json.hpp>
 
 int main(void)
 {
 	using namespace kdr;
-	Game* game = new TestGame("KDR Engine", 500, 500, false);
+	Game* game = new TestGame("KDR Engine", 500, 500, true);
 	int result = game->run();
 	delete game;
 	return result;

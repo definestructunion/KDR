@@ -25,15 +25,13 @@ Input:
 
 * GLFW
 
-
-Audio:
-
-* IrrKlang
-
-
 Gameplay:
 
 * FastNoise
+
+Serialization:
+
+* Nlohmann JSON
 
 ---
 
@@ -60,10 +58,6 @@ Gameplay:
 
 * Layer Rendering
 
-* Audio
-
 * Parents
 
-* Layered Noise
-
-* A* Pathfinding
+* JSON Serializing KDR Components

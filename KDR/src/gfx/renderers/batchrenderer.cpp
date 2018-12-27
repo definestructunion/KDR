@@ -317,7 +317,7 @@ namespace kdr {
 				fillBuffer(*transforms_back * vec3(x1, y0, 0), vec2(glyph->s1, glyph->t0), ts, color);
 				// push our index_count by the technically correct
 				// amount of vertices our squares take up (6)
-				index_count += 6;
+				index_count += RENDERER_INDEX_COUNT;
 				// add to the offset of the text
 				x += glyph->advance_x;
 			}
@@ -332,7 +332,7 @@ namespace kdr {
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 		// unbind the buffer we bound
 		// when beginning the mapping
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, NULL);
 		return;
 	}
 

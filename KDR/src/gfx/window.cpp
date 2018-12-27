@@ -59,14 +59,16 @@ namespace kdr {
 			std::cout << error.what() << std::endl;
 			throw error;
 		}
-
+		
 		glfw_window = glfwCreateWindow(width, height, title, NULL, NULL);
+		glfwHideWindow(glfw_window);
+
 		// glfw is initialized now
 		// set callback functions that
 		// need to be after glfwInit
 		// some of these can be before glfwInit though
 		glfwMakeContextCurrent(glfw_window);
-		glfwHideWindow(glfw_window);
+		//glfwHideWindow(glfw_window);
 		game.loadAssets();
 		glfwShowWindow(glfw_window);
 
@@ -83,7 +85,7 @@ namespace kdr {
 		// keep track of whether or not
 		// glew has already been intialized
 		static bool initted = false;
-		if(!initted)
+		if (!initted) {
 			// if glew failed to initialize
 			// send a runtime exception and
 			// terminate the currently made
@@ -94,6 +96,8 @@ namespace kdr {
 				std::cout << error.what() << std::endl;
 				throw error;
 			}
+			initted = true;
+		}
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

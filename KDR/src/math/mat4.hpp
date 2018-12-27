@@ -22,7 +22,6 @@ namespace kdr {
 		static mat4 scale(const vec3& scale);
 
 		mat4& multiply(const mat4& other);
-		mat4& invert();
 		vec3 multiply(const vec3& other) const;
 		vec4 multiply(const vec4& other) const;
 

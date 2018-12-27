@@ -91,12 +91,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dep\AudiereWin32\include;$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dep\AudiereWin32\lib;$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>audiere.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,11 +105,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dep\AudiereWin32\include;$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dep\AudiereWin32\lib;$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>audiere.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -120,7 +120,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dep\AudiereWin32\include;$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;FT2_BUILD_LIBRARY;WIN32;_LIB;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -131,8 +131,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dep\AudiereWin32\lib;$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>audiere.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,7 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dep\AudiereWin32\include;$(SolutionDir)dep\GLFW\include;$(SolutionDir)dep\GLEW\include;$(SolutionDir)dep\FreeType\include;$(ProjectDir)src;$(ProjectDir)ext;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
@@ -153,8 +153,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)dep\AudiereWin32\lib;$(SolutionDir)dep\GLFW\lib-vc2015;$(SolutionDir)dep\GLEW\lib\Release\Win32;$(SolutionDir)dep\FreeType\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>audiere.lib;glfw3.lib;glew32s.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -162,6 +162,8 @@
     <ClCompile Include="ext\freetype-gl\texture-atlas.c" />
     <ClCompile Include="ext\freetype-gl\texture-font.c" />
     <ClCompile Include="ext\freetype-gl\vector.c" />
+    <ClCompile Include="ext\nlohmann\json.cpp" />
+    <ClCompile Include="ext\stb_image\stb_image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\base\game.cpp" />
     <ClCompile Include="src\gfx\font.cpp" />
@@ -186,6 +188,38 @@
     <ClInclude Include="ext\freetype-gl\texture-font.h" />
     <ClInclude Include="ext\freetype-gl\vec234.h" />
     <ClInclude Include="ext\freetype-gl\vector.h" />
+    <ClInclude Include="ext\nlohmann\adl_serializer.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\conversions\from_json.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\conversions\to_chars.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\conversions\to_json.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\exceptions.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\binary_reader.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\input_adapters.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\json_sax.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\lexer.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\parser.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\input\position_t.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\internal_iterator.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\iteration_proxy.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\iterator_traits.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\iter_impl.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\json_reverse_iterator.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\iterators\primitive_iterator.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\json_pointer.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\json_ref.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\macro_scope.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\macro_unscope.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\meta\cpp_future.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\meta\detected.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\meta\is_sax.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\meta\type_traits.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\meta\void_t.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\output\binary_writer.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\output\output_adapters.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\output\serializer.hpp" />
+    <ClInclude Include="ext\nlohmann\detail\value_t.hpp" />
+    <ClInclude Include="ext\nlohmann\json.hpp" />
+    <ClInclude Include="ext\nlohmann\json_fwd.hpp" />
     <ClInclude Include="ext\stb_image\stb_image.h" />
     <ClInclude Include="src\base\game.hpp" />
     <ClInclude Include="src\gfx\font.hpp" />
