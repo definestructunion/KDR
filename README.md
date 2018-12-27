@@ -25,10 +25,6 @@ Input:
 
 * GLFW
 
-Gameplay:
-
-* FastNoise
-
 Serialization:
 
 * Nlohmann JSON
